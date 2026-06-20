@@ -15,6 +15,55 @@
   </head>
 
   <body>
+    <button
+      type="button"
+      id="info-btn"
+      class="info-btn"
+      aria-label="App information"
+      title="About"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.75" />
+        <path
+          d="M12 11v5M12 8h.01"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.75"
+          stroke-linecap="round"
+        />
+      </svg>
+    </button>
+
+    <div
+      id="info-modal"
+      class="info-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="info-modal-title"
+      hidden
+    >
+      <button type="button" id="info-modal-backdrop" class="info-modal-backdrop" aria-label="Close"></button>
+      <div class="info-modal-dialog">
+        <button type="button" id="info-modal-close" class="info-modal-close" aria-label="Close">
+          ×
+        </button>
+        <h2 id="info-modal-title">About</h2>
+        <p class="info-modal-app">Shutdown Windows</p>
+        <p class="info-modal-version">
+          Version <span id="info-version">—</span>
+        </p>
+        <a
+          href="https://github.com/amhanisa/shutdown-windows"
+          id="info-github-link"
+          class="info-modal-link"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          github.com/amhanisa/shutdown-windows
+        </a>
+      </div>
+    </div>
+
     <main class="app">
       <header class="header">
         <div class="header-icon">⏻</div>

@@ -1,5 +1,7 @@
 const { invoke } = window.__TAURI__.core;
 const { getCurrentWindow } = window.__TAURI__.window;
+const { getVersion } = window.__TAURI__.app;
+const { openUrl } = window.__TAURI__.opener;
 
 const PRESETS = [5, 10, 15, 30, 60];
 const MAX_MINUTES = 1440;
@@ -23,7 +25,14 @@ const toastEl = document.getElementById("toast");
 const toastTextEl = document.getElementById("toast-text");
 const toastCloseBtn = document.getElementById("toast-close");
 const toastProgressBar = document.getElementById("toast-progress-bar");
+const infoBtn = document.getElementById("info-btn");
+const infoModal = document.getElementById("info-modal");
+const infoModalBackdrop = document.getElementById("info-modal-backdrop");
+const infoModalClose = document.getElementById("info-modal-close");
+const infoVersion = document.getElementById("info-version");
+const infoGithubLink = document.getElementById("info-github-link");
 
+const GITHUB_URL = "https://github.com/amhanisa/shutdown-windows";
 const TOAST_AUTO_DISMISS_MS = 5000;
 let toastTimeout = null;
 
@@ -232,6 +241,31 @@ async function startShutdown() {
   }
 }
 
+async function loadAppVersion() {
+  try {
+    infoVersion.textContent = await getVersion();
+  } catch {
+    infoVersion.textContent = "0.1.0";
+  }
+}
+
+function openInfoModal() {
+  infoModal.hidden = false;
+}
+
+function closeInfoModal() {
+  infoModal.hidden = true;
+}
+
+async function openGithubLink(event) {
+  event.preventDefault();
+  try {
+    await openUrl(GITHUB_URL);
+  } catch (err) {
+    showMessage(String(err), "error");
+  }
+}
+
 async function cancelShutdown() {
   clearMessage();
   cancelBtn.disabled = true;
@@ -249,6 +283,19 @@ async function cancelShutdown() {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
+  loadAppVersion();
+
+  infoBtn.addEventListener("click", openInfoModal);
+  infoModalBackdrop.addEventListener("click", closeInfoModal);
+  infoModalClose.addEventListener("click", closeInfoModal);
+  infoGithubLink.addEventListener("click", openGithubLink);
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !infoModal.hidden) {
+      closeInfoModal();
+    }
+  });
+
   presetButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
       selectPreset(Number(btn.dataset.minutes));
