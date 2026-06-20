@@ -3,8 +3,17 @@ use std::process::Command;
 use tauri::Manager;
 
 fn run_shutdown(args: &[&str]) -> Result<(), String> {
-    let output = Command::new("shutdown")
-        .args(args)
+    let mut command = Command::new("shutdown");
+    command.args(args);
+
+    #[cfg(windows)]
+    {
+        use std::os::windows::process::CommandExt;
+        const CREATE_NO_WINDOW: u32 = 0x0800_0000;
+        command.creation_flags(CREATE_NO_WINDOW);
+    }
+
+    let output = command
         .output()
         .map_err(|e| format!("Failed to run shutdown command: {e}"))?;
 
