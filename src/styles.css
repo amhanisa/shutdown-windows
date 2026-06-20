@@ -137,17 +137,25 @@ body {
 }
 
 .info-modal-link {
-  display: inline-block;
-  font-size: 0.8rem;
-  color: #818cf8;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  color: #a0a0b8;
   text-decoration: none;
-  word-break: break-all;
-  transition: color 0.15s;
+  border-radius: 999px;
+  transition: color 0.15s, background 0.15s;
+}
+
+.info-modal-link svg {
+  width: 1.25rem;
+  height: 1.25rem;
 }
 
 .info-modal-link:hover {
-  color: #a5b4fc;
-  text-decoration: underline;
+  color: #e8e8f0;
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .app {
