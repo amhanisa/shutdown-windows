@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shutdown Windows</title>
+    <script type="module" src="/main.js" defer></script>
+  </head>
+
+  <body>
+    <main class="app">
+      <header class="header">
+        <div class="header-icon">⏻</div>
+        <h1>Shutdown Windows</h1>
+        <p class="subtitle">Schedule PC shutdown with a countdown</p>
+      </header>
+
+      <section id="setup-section" class="section setup-section">
+        <h2>Select Time</h2>
+
+        <div class="presets" id="presets">
+          <button type="button" class="preset-btn" data-minutes="5">5 min</button>
+          <button type="button" class="preset-btn" data-minutes="10">10 min</button>
+          <button type="button" class="preset-btn" data-minutes="15">15 min</button>
+          <button type="button" class="preset-btn" data-minutes="30">30 min</button>
+          <button type="button" class="preset-btn" data-minutes="60">60 min</button>
+        </div>
+
+        <div class="custom-input-group">
+          <label for="custom-minutes">Or enter manually (minutes)</label>
+          <input
+            type="number"
+            id="custom-minutes"
+            min="1"
+            max="1440"
+            placeholder="1 – 1440"
+          />
+        </div>
+
+        <p id="selection-hint" class="hint">Pick a preset or enter a custom duration</p>
+
+        <div class="start-btn-wrap">
+          <button type="button" id="start-btn" class="btn btn-primary" disabled>
+            Start Shutdown
+          </button>
+        </div>
+      </section>
+
+      <section id="countdown-section" class="section countdown-section hidden">
+        <p class="countdown-label">PC will shut down in</p>
+        <div id="countdown-display" class="countdown-display">00:00</div>
+        <p id="countdown-shutdown-at" class="countdown-shutdown-at"></p>
+        <p id="countdown-status" class="countdown-status"></p>
+
+        <button type="button" id="cancel-btn" class="btn btn-danger">
+          Cancel Shutdown
+        </button>
+      </section>
+
+      <div id="toast" class="toast" role="status" aria-live="polite" hidden>
+        <div class="toast-body">
+          <p id="toast-text" class="toast-text"></p>
+          <button
+            type="button"
+            id="toast-close"
+            class="toast-close"
+            aria-label="Close notification"
+          >
+            ×
+          </button>
+        </div>
+        <div class="toast-progress" aria-hidden="true">
+          <span id="toast-progress-bar" class="toast-progress-bar"></span>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
